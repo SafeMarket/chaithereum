@@ -24,7 +24,7 @@ A custom chai instance
 ###chaithereum.promise
 A Q promise that will be fulfilled when chaithereum is ready. Typically you would start a test waiting for the chaitheruem promise.
 
-   before(() => { return chaithereum.promise })
+    before(() => { return chaithereum.promise })
 
 ###chaithereum.accounts
 A list of 10 accounts 
