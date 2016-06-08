@@ -4,15 +4,33 @@ A tool for unit testing Ethereum (solidity/web3) contracts
 ##Reasoning
 Unit testing is an important part of all development. This is especially true for Ethereum contracts which are difficult or impossible to upgrade. Unfortunately, web3.js has a few drawbacks which make it difficult for unit testing. Chaithereum includes a forked version of web3 and chai-bignumber which makes unit testing much easier.
 
-###Q
+####Q
 Chaithereum uses a branch of web3 with Q promises. Instead of calling web3 with a callback, simply add a `q` to the end. For example, instead of `web3.eth.getBalance(function(){ ... })`, you would use `web3.eth.getBalance.q().then(function(){ ... })`. For contract functions, you can use `contract.func.q().then(function(){ ... })`
 
-###BigNumber
+####BigNumber
 Web3 uses a forked version of BigNumber.js. We use this forked version of BigNumber so that you can correctly test web3 BigNumber instances.
 
 ##Examples
-
 https://github.com/SafeMarket/dapp/tree/chaithereum-examples/test
+
+##Interface
+
+###chaithereum.web3
+A custom web3 instance suited for unit testing
+
+###chaithereum.chai
+A custom chai instance
+
+###chaithereum.promise
+A Q promise that will be fulfilled when chaithereum is ready. Typically you would start a test waiting for the chaitheruem promise.
+
+   before(() => { return chaithereum.promise })
+
+###chaithereum.accounts
+A list of 10 accounts 
+
+###chaithereum.account
+The first account, set as web3.eth.defaultAccount
 
 ##Bindings
 
