@@ -1,0 +1,21 @@
+{
+  "name": "chaithereum",
+  "version": "0.0.0",
+  "description": "Chai ethereum tools",
+  "main": "chaithereum.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "chai-bignumber": "git+https://github.com/SafeMarket/chai-bignumber.git#custom-bignumber",
+    "ethereumjs-testrpc": "^2.0.8",
+    "web3": "git+https://github.com/SafeMarket/web3.js.git#chaithereum"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  }
+}
