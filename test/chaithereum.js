@@ -40,12 +40,6 @@ describe('chaithereum', () => {
 		return web3.eth.getBalance.q('0x00000000000000000000000000000000000000af').should.eventually.be.bignumber.equal(1)
 	})
 
-	it('should wait 1 seconds', (done) => {
-		setTimeout(() => {
-			done()
-		}, 2 * 1000)
-	})
-
 	describe('bindings', () => {
 
 		it('should have bignumber', () => {
