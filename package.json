@@ -12,7 +12,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "chai-bignumber": "^2.0.0",
-    "ethereumjs-testrpc": "git+https://github.com/SafeMarket/testrpc.git#evm_setTimestamp",
+    "ethereumjs-testrpc": "git+https://github.com/SafeMarket/testrpc.git#increaseTime",
     "web3": "git+https://github.com/SafeMarket/web3.js.git#chaithereum"
   },
   "devDependencies": {
