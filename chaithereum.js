@@ -3,7 +3,8 @@ const Web3 = require('web3')
 const TestRPC = require('ethereumjs-testrpc')
 
 const web3 = new Web3()
-web3.setProvider(TestRPC.provider())
+const provider = TestRPC.provider()
+web3.setProvider(provider)
 
 chai.use(require('./bindings.js'))
 chai.use(require('chai-bignumber')(web3.toBigNumber(0).constructor))
@@ -13,6 +14,7 @@ chai.should()
 const chaithereum = {
   chai,
   web3,
+  provider,
   accounts: [],
   promise: web3.eth.getAccounts.q().then((_accounts) => {
     chaithereum.accounts.push.apply(chaithereum.accounts, _accounts)

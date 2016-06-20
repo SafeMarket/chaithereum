@@ -13,6 +13,10 @@ describe('chaithereum', () => {
 		expect(web3).to.be.an('object')
 	})
 
+	it('should have provider object', () => {
+		expect(chaithereum.provider).to.be.an('object')
+	})
+
 	it('should have a promise fulfilled', () => {
 		return chaithereum.promise.should.be.fulfilled
 	})

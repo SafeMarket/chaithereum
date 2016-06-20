@@ -17,11 +17,14 @@ https://github.com/SafeMarket/dapp/tree/chaithereum-examples/test
 
 ##Interface
 
+###chaithereum.chai
+A custom chai instance
+
 ###chaithereum.web3
 A custom web3 instance suited for unit testing
 
-###chaithereum.chai
-A custom chai instance
+###chaithereum.provider
+The provider used to instantiate web3
 
 ###chaithereum.promise
 A Q promise that will be fulfilled when chaithereum is ready. Typically you would start a test waiting for the chaitheruem promise.
