@@ -59,6 +59,10 @@ describe('chaithereum', () => {
 			}).should.be.fulfilled
 		})
 
+		it('should have a length of 10', () => {
+			expect(addresses).to.have.length(10)
+		})
+
 		it('should have an address as each member of the array', (done) => {
 			addresses.forEach((address) => {
 				try {
