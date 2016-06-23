@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const chai = require('chai')
 const Web3 = require('web3')
 const TestRPC = require('ethereumjs-testrpc')
@@ -19,7 +20,36 @@ const chaithereum = {
   promise: web3.eth.getAccounts.q().then((_accounts) => {
     chaithereum.accounts.push.apply(chaithereum.accounts, _accounts)
     chaithereum.account = web3.eth.defaultAccount = _accounts[0]
-  })
+  }),
+  generateAddress,
+  generateAddresses
+}
+
+function generateAddress() {
+	const deferred = web3.Q.defer()
+
+	crypto.randomBytes(20, function(err, buffer) {
+	  deferred.resolve('0x'+buffer.toString('hex'))
+	})
+
+	return deferred.promise
+}
+
+function generateAddresses(count){
+	const deferred = web3.Q.defer()
+	const addresses = []
+
+	generateAddress().then(handleGeneratedAddress)
+
+	function handleGeneratedAddress(address){
+		addresses.push(address)
+		if(addresses.length === (count || 10))
+			deferred.resolve(addresses)
+		else
+			generateAddress().then(handleGeneratedAddress)
+	}
+
+	return deferred.promise
 }
 
 module.exports = chaithereum

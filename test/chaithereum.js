@@ -1,3 +1,5 @@
+"use strict"
+
 const chaithereum = require('../chaithereum.js')
 const expect = chaithereum.chai.expect
 const web3 = chaithereum.web3
@@ -42,6 +44,31 @@ describe('chaithereum', () => {
 
 	it('af should have balance of 1 wei', () => {
 		return web3.eth.getBalance.q('0x00000000000000000000000000000000000000af').should.eventually.be.bignumber.equal(1)
+	})
+
+	describe('address generation', () => {
+		it('should generate a single address', () => {
+			return chaithereum.generateAddress().should.eventually.be.address
+		})
+
+		let addresses
+
+		it('should generate addresses array', () => {
+			return chaithereum.generateAddresses().then((_addresses) => {
+				addresses = _addresses
+			}).should.be.fulfilled
+		})
+
+		it('should have an address as each member of the array', (done) => {
+			addresses.forEach((address) => {
+				try {
+					expect(address).to.be.an.address
+				} catch(err) {
+					done(err)
+				}
+			})
+			done()
+		})
 	})
 
 	describe('bindings', () => {
