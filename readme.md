@@ -41,7 +41,7 @@ The first account, set as web3.eth.defaultAccount
 Generate an address asynchronously. `chaithereum.generateAddress().then((address) => { ... }))`
 
 ###chaithereum.generateAddresses(count) returns promise of addresses
-Generate an addresses asynchronously. `chaithereum.generateAddresses(5).then((addresses) => { ... }))`
+Generate an addresses asynchronously. `chaithereum.generateAddresses(5).then((addresses[5]) => { ... }))`
 
 ##Bindings
 
