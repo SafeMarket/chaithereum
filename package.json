@@ -16,6 +16,7 @@
     "web3": "git+https://github.com/SafeMarket/web3.js.git#chaithereum"
   },
   "devDependencies": {
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "web3-q": "^0.16.1"
   }
 }

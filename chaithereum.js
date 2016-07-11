@@ -1,6 +1,6 @@
 const crypto = require('crypto')
 const chai = require('chai')
-const Web3 = require('web3')
+const Web3 = require('web3-q')
 const TestRPC = require('ethereumjs-testrpc')
 
 const web3 = new Web3()
