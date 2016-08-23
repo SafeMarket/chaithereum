@@ -22,34 +22,47 @@ const chaithereum = {
     chaithereum.account = web3.eth.defaultAccount = _accounts[0]
   }),
   generateAddress,
-  generateAddresses
+  generateAddresses,
+  increaseTime
 }
 
 function generateAddress() {
-	const deferred = web3.Q.defer()
+  const deferred = web3.Q.defer()
 
-	crypto.randomBytes(20, function(err, buffer) {
-	  deferred.resolve('0x'+buffer.toString('hex'))
-	})
+  crypto.randomBytes(20, function(err, buffer) {
+    deferred.resolve('0x'+buffer.toString('hex'))
+  })
 
-	return deferred.promise
+  return deferred.promise
 }
 
 function generateAddresses(count){
-	const deferred = web3.Q.defer()
-	const addresses = []
+  const deferred = web3.Q.defer()
+  const addresses = []
 
-	generateAddress().then(handleGeneratedAddress)
+  generateAddress().then(handleGeneratedAddress)
 
-	function handleGeneratedAddress(address){
-		addresses.push(address)
-		if(addresses.length === (count || 10))
-			deferred.resolve(addresses)
-		else
-			generateAddress().then(handleGeneratedAddress)
-	}
+  function handleGeneratedAddress(address){
+    addresses.push(address)
+    if(addresses.length === (count || 10))
+    deferred.resolve(addresses)
+    else
+    generateAddress().then(handleGeneratedAddress)
+  }
 
-	return deferred.promise
+  return deferred.promise
+}
+
+function increaseTime(time) {
+  const deferred = web3.Q.defer()
+
+  provider.sendAsync({ method: 'evm_increaseTime', params: [time] }, function() {
+    provider.sendAsync({ method: 'evm_mine'}, function() {
+      deferred.resolve()
+    })
+  })
+
+  return deferred.promise
 }
 
 module.exports = chaithereum

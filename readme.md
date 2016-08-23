@@ -1,9 +1,9 @@
-#chaithereum
+# chaithereum
 A tool for unit testing Ethereum (solidity/web3) contracts
 
 `npm install chaithereum`
 
-##Reasoning
+## Reasoning
 Unit testing is an important part of all development. This is especially true for Ethereum contracts which are difficult or impossible to upgrade. Unfortunately, web3.js has a few drawbacks which make it difficult for unit testing. Chaithereum includes a forked version of web3 and chai-bignumber which makes unit testing much easier.
 
 <!-- ####Q
@@ -12,40 +12,43 @@ Chaithereum uses a branch of web3 with Q promises. Instead of calling web3 with 
 ####BigNumber
 Web3 uses a forked version of BigNumber.js. We use this forked version of BigNumber so that you can correctly test web3 BigNumber instances.
  -->
-##Examples
+## Examples
 https://github.com/SafeMarket/dapp/tree/chaithereum-examples/test
 
-##Interface
+## Interface
 
-###chaithereum.chai
+### chaithereum.chai
 A custom chai instance
 
-###chaithereum.web3
+### chaithereum.web3
 A custom web3 instance suited for unit testing
 
-###chaithereum.provider
+### chaithereum.provider
 The provider used to instantiate web3
 
-###chaithereum.promise
+### chaithereum.promise
 A Q promise that will be fulfilled when chaithereum is ready. Typically you would start a test waiting for the chaitheruem promise.
 
     before(() => { return chaithereum.promise })
 
-###chaithereum.accounts
-A list of 10 accounts 
+### chaithereum.accounts
+A list of 10 accounts
 
-###chaithereum.account
+### chaithereum.account
 The first account, set as web3.eth.defaultAccount
 
-###chaithereum.generateAddress() returns promise of an address
+### chaithereum.generateAddress() returns promise of an address
 Generate an address asynchronously. `chaithereum.generateAddress().then((address) => { ... }))`
 
-###chaithereum.generateAddresses(count) returns promise of addresses
+### chaithereum.generateAddresses(count) returns promise of addresses
 Generate an addresses asynchronously. `chaithereum.generateAddresses(5).then((addresses[5]) => { ... }))`
 
-##Bindings
+### chaithereum.increaseTime(seconds) returns promise
+Jump forward in time asynchronously. `chaithereum.increaseTime(42).then(() => { ... }))`
 
-###hex
+## Bindings
+
+### hex
 Ensures a thing is a hex string
 
     thing.should.be.hex
@@ -53,7 +56,7 @@ Ensures a thing is a hex string
     contract.getThing.q().should.eventually.be.hex
     contract.getThing.q().should.eventually.not.be.hex
 
-###address
+### address
 Ensures a thing is a valid Ethereum address
 
     thing.should.be.address
@@ -61,7 +64,7 @@ Ensures a thing is a valid Ethereum address
     contract.getThing.q().should.eventually.be.address
     contract.getThing.q().should.eventually.not.be.address
 
-###zeros
+### zeros
 Ensures a thing is a hex string of zeros
 
     thing.should.be.zeros
@@ -69,7 +72,7 @@ Ensures a thing is a hex string of zeros
     contract.getThing.q().should.eventually.be.zeros
     contract.getThing.q().should.eventually.not.be.zeros
 
-###contract
+### contract
 Ensures a thing is a web3.contract instance
 
     thing.should.be.address
@@ -77,7 +80,7 @@ Ensures a thing is a web3.contract instance
     contract.getThing.q().should.eventually.be.address
     contract.getThing.q().should.eventually.not.be.address
 
-###ascii(str)
+### ascii(str)
 Ensures a thing is the null-escaped ascii equvalent. `test`, `0x74657374`, and `0x007465737400` are all ascii equivalent of `test`.
 
     thing.should.be.ascii(str)
@@ -85,7 +88,7 @@ Ensures a thing is the null-escaped ascii equvalent. `test`, `0x74657374`, and `
     contract.getThing.q().should.eventually.be.ascii(str)
     contract.getThing.q().should.eventually.not.be.ascii(str)
 
-###bignumber
+### bignumber
 For a full list of bignumber bindings, check out [chai-bignumber](https://github.com/safemarket/chai-bignumber/tree/custom-bignumber).
 
 	thing.should.be.bignumber.equal(0)
