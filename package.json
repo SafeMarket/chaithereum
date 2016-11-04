@@ -1,6 +1,6 @@
 {
   "name": "chaithereum",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Chai ethereum tools",
   "main": "chaithereum.js",
   "scripts": {
