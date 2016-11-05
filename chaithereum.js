@@ -1,7 +1,24 @@
 const crypto = require('crypto')
 const chai = require('chai')
-const Web3 = require('web3-q')
+const Web3 = require('Web3')
 const TestRPC = require('ethereumjs-testrpc')
+const Q = require('q')
+
+if(typeof Function.prototype.q === 'undefined') {
+  Function.prototype.q = function q(){
+    const args = Array.prototype.slice.call(arguments)
+    const deferred = Q.defer()
+    args.push(function qCallback(err, result) {
+      if (err) {
+        deferred.reject(err)
+      } else {
+        deferred.resolve(result)
+      }
+    })
+    this.apply(this, args)
+    return deferred.promise
+  }
+}
 
 const web3 = new Web3()
 const provider = TestRPC.provider()
@@ -27,7 +44,7 @@ const chaithereum = {
 }
 
 function generateAddress() {
-  const deferred = web3.Q.defer()
+  const deferred = Q.defer()
 
   crypto.randomBytes(20, function(err, buffer) {
     deferred.resolve('0x'+buffer.toString('hex'))
@@ -37,7 +54,7 @@ function generateAddress() {
 }
 
 function generateAddresses(count){
-  const deferred = web3.Q.defer()
+  const deferred = Q.defer()
   const addresses = []
 
   generateAddress().then(handleGeneratedAddress)
@@ -54,7 +71,7 @@ function generateAddresses(count){
 }
 
 function increaseTime(time) {
-  const deferred = web3.Q.defer()
+  const deferred = Q.defer()
 
   provider.sendAsync({ method: 'evm_increaseTime', params: [time] }, function() {
     provider.sendAsync({ method: 'evm_mine'}, function() {
