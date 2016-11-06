@@ -1,10 +1,7 @@
 # chaithereum
-A tool for unit testing Ethereum (solidity/web3) contracts
+Unit testing 'utility belt' for Ethereum Solidity contracts
 
 `npm install chaithereum`
-
-## Reasoning
-Unit testing is an important part of all development. This is especially true for Ethereum contracts which are difficult or impossible to upgrade. Unfortunately, web3.js has a few drawbacks which make it difficult for unit testing. Chaithereum includes a forked version of web3 and chai-bignumber which makes unit testing much easier.
 
 ## Usage
 

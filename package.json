@@ -1,7 +1,7 @@
 {
   "name": "chaithereum",
   "version": "2.0.1",
-  "description": "Chai ethereum tools",
+  "description": "Unit testing 'utility belt' for Ethereum Solidity contracts",
   "main": "chaithereum.js",
   "scripts": {
     "test": "mocha"
