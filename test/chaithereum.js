@@ -1,6 +1,7 @@
 "use strict"
 
-const chaithereum = require('../chaithereum.js')
+const Chaithereum = require('../chaithereum.js')
+const chaithereum = new Chaithereum
 const expect = chaithereum.chai.expect
 const web3 = chaithereum.web3
 const chai = chaithereum.chai
