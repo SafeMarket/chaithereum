@@ -1,4 +1,4 @@
-const Web3 = require('web3')
+const Web3 = require('web3-q')
 const web3 = new Web3()
 
 module.exports = function bindings(chai, utils) {
