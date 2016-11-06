@@ -5,6 +5,8 @@ const chaithereum = new Chaithereum
 const expect = chaithereum.chai.expect
 const web3 = chaithereum.web3
 const chai = chaithereum.chai
+const solc = require('solc')
+const Q = require('q')
 
 describe('chaithereum', () => {
 
@@ -13,7 +15,7 @@ describe('chaithereum', () => {
   })
 
   it('should have web3 object', () => {
-    expect(web3).to.be.an('object')
+    expect(chaithereum.web3).to.be.an('object')
   })
 
   it('should have provider object', () => {
@@ -89,5 +91,49 @@ describe('chaithereum', () => {
       })
     })
   })
+
+  describe('TestContract', () => {
+
+    const testContractSol =
+      `pragma solidity ^0.4.4;
+      contract TestContract {
+        address public owner; bytes32 public greeting = "hello";
+        function TestContract(){ owner = msg.sender; }
+      }`
+    let solcOutput
+    let testContract
+
+    it ('should compile with solc', () => {
+      solcOutput = solc.compile(testContractSol)
+      if(solcOutput.errors && solcOutput.errors.length > 0) {
+        throw new Error(solcOutput.errors[0])
+      }
+    })
+
+    it('should deploy', () => {
+      return chaithereum.web3.eth.contract(JSON.parse(solcOutput.contracts.TestContract.interface)).new.q({
+        data: solcOutput.contracts.TestContract.bytecode
+      }).should.eventually.be.a.contract.then((_testContract) => {
+        testContract = _testContract
+      })
+    })
+
+    it('should have correct owner', () => {
+      return web3.Q.all([
+        testContract.owner.q().should.eventually.be.an.address,
+        testContract.owner.q().should.eventually.equal(chaithereum.account)
+      ]).should.eventually.be.fulfilled 
+    })
+
+    it('should have correct owner', () => {
+      return web3.Q.all([
+        testContract.owner.q().should.eventually.be.an.address,
+        testContract.owner.q().should.eventually.equal(chaithereum.account)
+      ]).should.eventually.be.fulfilled 
+    })
+
+  })
+
+
 
 })

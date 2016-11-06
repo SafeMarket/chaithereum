@@ -1,6 +1,6 @@
 const crypto = require('crypto')
 const chai = require('chai')
-const Web3 = require('web3')
+const Web3 = require('web3-q')
 const TestRPC = require('ethereumjs-testrpc')
 const Q = require('q')
 
@@ -14,22 +14,12 @@ const Chaithereum = function (options) {
     const TestRPC = require('ethereumjs-testrpc')
     return TestRPC.provider()
   })()
+  this.solc = options.solc || require('solc')
+  this.arguments = []
+  this.objs = []
+  this.contexts = []
 
-  if(typeof Function.prototype.q === 'undefined') {
-    Function.prototype.q = function q(){
-      const args = Array.prototype.slice.call(arguments)
-      const deferred = Q.defer()
-      args.push(function qCallback(err, result) {
-        if (err) {
-          deferred.reject(err)
-        } else {
-          deferred.resolve(result)
-        }
-      })
-      this.apply(this, args)
-      return deferred.promise
-    }
-  }
+  const chaithereum = this
 
   this.web3 = new Web3()
   this.web3.setProvider(this.provider)
@@ -86,6 +76,14 @@ Chaithereum.prototype.increaseTime = function increaseTime(time) {
     })
   })
   return deferred.promise
+}
+
+Chaithereum.prototype.solcCompile = function (sols){
+  const solcOutput = this.solc.compile(sols)
+  if(solcOutput.errors && solcOutput.errors.length > 0) {
+    throw new Error(solcOutput.errors[0])
+  }
+  return solcOutput
 }
 
 module.exports = Chaithereum
