@@ -34,7 +34,7 @@ const Chaithereum = function (options) {
   this.web3 = new Web3()
   this.web3.setProvider(this.provider)
 
-  this.chai.use(require('./bindings.js'))
+  this.chai.use(require('chai-web3-bindings')(this.web3))
   this.chai.use(require('chai-bignumber')(this.web3.toBigNumber(0).constructor))
   this.chai.use(require('chai-as-promised'))
   this.chai.should()
