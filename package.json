@@ -15,7 +15,6 @@
     "chai-web3-bindings": "0.0.1",
     "ethereumjs-testrpc": "^2.2.0",
     "q": "^1.4.1",
-    "solc": "^0.4.4",
     "web3-q": "^0.16.2"
   },
   "devDependencies": {
