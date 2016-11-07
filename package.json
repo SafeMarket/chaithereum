@@ -12,7 +12,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "chai-bignumber": "^2.0.0",
-    "chai-web3-bindings": "0.0.1",
+    "chai-web3-bindings": "0.0.2",
     "ethereumjs-testrpc": "^2.2.0",
     "q": "^1.4.1",
     "web3-q": "^0.16.2"
