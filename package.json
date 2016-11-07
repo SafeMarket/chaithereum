@@ -1,6 +1,6 @@
 {
   "name": "chaithereum",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Unit testing 'utility belt' for Ethereum Solidity contracts",
   "main": "chaithereum.js",
   "scripts": {
