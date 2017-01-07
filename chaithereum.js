@@ -2,14 +2,17 @@ const crypto = require('crypto')
 const Q = require('q')
 
 const Chaithereum = function (options) {
-  
+
   options = options || {}
-  
+
+  this.gasLimit = options.gasLimit || 4000000
   this.chai = options.chai || require('chai')
   this.Web3 = options.Web3 || require('web3-q')
   this.provider = options.provider || (() => {
     const TestRPC = require('ethereumjs-testrpc')
-    return TestRPC.provider()
+    return TestRPC.provider({
+      gasLimit: this.gasLimit
+    })
   })()
 
   const chaithereum = this
@@ -64,11 +67,31 @@ Chaithereum.prototype.generateAddresses = function generateAddresses(count){
 Chaithereum.prototype.increaseTime = function increaseTime(time) {
   const deferred = Q.defer()
   this.provider.sendAsync({ method: 'evm_increaseTime', params: [time] }, () => {
-    this.provider.sendAsync({ method: 'evm_mine'}, () => {
+    this.mineBlock().then(() => {
       deferred.resolve()
     })
   })
   return deferred.promise
+}
+
+Chaithereum.prototype.mineBlock = function mineBlock() {
+  const deferred = Q.defer()
+  this.provider.sendAsync({ method: 'evm_mine'}, () => {
+    deferred.resolve()
+  })
+  return deferred.promise
+}
+
+Chaithereum.prototype.mineBlocks = function mineBlocks(_count) {
+  const count = _count || 0
+
+  if (count === 0) {
+    return Q.resolve()
+  }
+
+  return this.mineBlock().then(() => {
+    return this.mineBlocks(count - 1)
+  })
 }
 
 module.exports = Chaithereum

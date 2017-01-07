@@ -54,6 +54,12 @@ Generate an addresses asynchronously. `chaithereum.generateAddresses(5).then((ad
 ### `chaithereum.increaseTime(seconds)` returns promise
 Jump forward in time asynchronously. `chaithereum.increaseTime(42).then(() => { ... }))`
 
+### `chaithereum.mineBlock()` returns promise
+Mine a block. `chaithereum.mineBlock().then(() => { ... }))`
+
+### `chaithereum.mineBlocks(count)` returns promise
+Mine `count` blocks. `chaithereum.mineBlocks(...).then(() => { ... }))`
+
 ## Bindings
 
 Chaithereum loads bindings from the following packages
@@ -61,5 +67,3 @@ Chaithereum loads bindings from the following packages
 [chai-web3-bindings](https://github.com/SafeMarket/chai-web3-bindings)
 [chai-bignumber](https://github.com/asmarques/chai-bignumber)
 [chai-as-promised](https://github.com/domenic/chai-as-promised)
-
-

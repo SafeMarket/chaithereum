@@ -76,20 +76,48 @@ describe('chaithereum', () => {
       })
       done()
     })
+  })
 
-    it('should jump into the ~future~', (done) => {
+  describe('time/block skipping', () => {
+
+    let block
+    let blockNumber
+
+    it('should get current block', () => {
+      return web3.eth.getBlock.q('latest').then((_block) => {
+        block = _block
+        blockNumber = block.number
+      }).should.be.fulfilled
+    })
+
+    it('should increaseTime(4242)', () => {
       var timeDiff = 4242;
-
-      return web3.eth.getBlock('latest', (err, block) => {
-        var oldTimestamp = block.timestamp
-        chaithereum.increaseTime(timeDiff).then(() => {
-          web3.eth.getBlock('latest', (err, block) => {
-            chai.assert.equal(oldTimestamp+timeDiff, block.timestamp)
-            done()
-          })
+      return chaithereum.increaseTime(timeDiff).then(() => {
+        return web3.eth.getBlock.q('latest').then((_block) => {
+          _block.timestamp.should.equal(block.timestamp + timeDiff)
+          block = _block
         })
+      }).should.be.fulfilled
+    })
+
+    it('should mineBlock()', () => {
+      return chaithereum.mineBlock().then(() => {
+        return web3.eth.getBlock.q('latest').then((_block) => {
+          _block.number.should.equal(block.number + 1)
+          block = _block
+        })
+      }).should.be.fulfilled
+    })
+
+    it('should mineBlocks(10)', () => {
+      return chaithereum.mineBlocks(10).then(() => {
+        return web3.eth.getBlock.q('latest').then((_block) => {
+          _block.number.should.equal(block.number + 10)
+          block = _block
+        }).should.be.fulfilled
       })
     })
+
   })
 
   describe('TestContract', () => {
@@ -112,7 +140,7 @@ describe('chaithereum', () => {
 
     it('should deploy', () => {
       return chaithereum.web3.eth.contract(JSON.parse(solcOutput.contracts.TestContract.interface)).new.q({
-        data: solcOutput.contracts.TestContract.bytecode
+        data: solcOutput.contracts.TestContract.bytecode, gas: chaithereum.gasLimit
       }).should.eventually.be.a.contract.then((_testContract) => {
         testContract = _testContract
       })
@@ -122,14 +150,7 @@ describe('chaithereum', () => {
       return web3.Q.all([
         testContract.owner.q().should.eventually.be.an.address,
         testContract.owner.q().should.eventually.equal(chaithereum.account)
-      ]).should.eventually.be.fulfilled 
-    })
-
-    it('should have correct owner', () => {
-      return web3.Q.all([
-        testContract.owner.q().should.eventually.be.an.address,
-        testContract.owner.q().should.eventually.equal(chaithereum.account)
-      ]).should.eventually.be.fulfilled 
+      ]).should.eventually.be.fulfilled
     })
 
   })
