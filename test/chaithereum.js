@@ -81,17 +81,23 @@ describe('chaithereum', () => {
   describe('time/block skipping', () => {
 
     let block
-    let blockNumber
+    let block0
+    let snapshotId
 
     it('should get current block', () => {
       return web3.eth.getBlock.q('latest').then((_block) => {
-        block = _block
-        blockNumber = block.number
+        block = block0 = _block
+      }).should.be.fulfilled
+    })
+
+    it('should get take snapshot', () => {
+      return chaithereum.takeSnapshot().then((_snapshotId) => {
+        snapshotId = _snapshotId
       }).should.be.fulfilled
     })
 
     it('should increaseTime(4242)', () => {
-      var timeDiff = 4242;
+      const timeDiff = 4242;
       return chaithereum.increaseTime(timeDiff).then(() => {
         return web3.eth.getBlock.q('latest').then((_block) => {
           _block.timestamp.should.equal(block.timestamp + timeDiff)
@@ -116,6 +122,14 @@ describe('chaithereum', () => {
           block = _block
         }).should.be.fulfilled
       })
+    })
+
+    it('should revert snapshot', () => {
+      return chaithereum.revertSnapshot(snapshotId).then(() => {
+        return web3.eth.getBlock.q('latest').then((_block) => {
+          _block.should.deep.equal(block0)
+        })
+      }).should.be.fulfilled
     })
 
   })

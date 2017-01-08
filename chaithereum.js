@@ -94,4 +94,20 @@ Chaithereum.prototype.mineBlocks = function mineBlocks(_count) {
   })
 }
 
+Chaithereum.prototype.takeSnapshot = function takeSnapshot() {
+  const deferred = Q.defer()
+  this.provider.sendAsync({ method: 'evm_snapshot', params: [] }, (id) => {
+    deferred.resolve(id)
+  })
+  return deferred.promise
+}
+
+Chaithereum.prototype.revertSnapshot = function revertSnapshot(id) {
+  const deferred = Q.defer()
+  this.provider.sendAsync({ method: 'evm_revert', params: [id] }, () => {
+    deferred.resolve()
+  })
+  return deferred.promise
+}
+
 module.exports = Chaithereum

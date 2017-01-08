@@ -60,6 +60,12 @@ Mine a block. `chaithereum.mineBlock().then(() => { ... }))`
 ### `chaithereum.mineBlocks(count)` returns promise
 Mine `count` blocks. `chaithereum.mineBlocks(...).then(() => { ... }))`
 
+### `chaithereum.takeSnapshot()` returns promise
+Take a snapshot of the current state. `chaithereum.takeSnapshot(...).then((id) => { ... }))`
+
+### `chaithereum.revertSnapshot(id)` returns promise
+Take a snapshot of the current state. `chaithereum.revertSnapshot(...).then(() => { ... }))`
+
 ## Bindings
 
 Chaithereum loads bindings from the following packages
